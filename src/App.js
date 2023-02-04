@@ -1,23 +1,37 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import IncomeCard from './components/IncomeCard/IncomeCard';
 
 function App() {
+  const [incomes, setIncomes] = useState([]);
+  const [incomeName, setIncomeName] = useState("");
+  const [incomeValue, setIncomeValue] = useState(0);
+
+  function addIncome(e) {
+    e.preventDefault();
+    if (incomeName.length && incomeValue > 0) {
+      setIncomes(prev => {
+        const income = { name: incomeName, value: parseFloat(incomeValue) };
+        setIncomeName("");
+        setIncomeValue(0);
+        return ([...prev, income])
+      });
+    } else {
+      alert('Please fill the income name and value!');
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>Budgeting app</h1>
+      <form onSubmit={addIncome}>
+        <input type="text" placeholder='Income Name' value={incomeName} onChange={(e) => setIncomeName(e.target.value.trim())} />
+        <input type="text" placeholder='Income Amount' value={incomeValue} onChange={(e) => setIncomeValue(e.target.value.trim())} />
+        <button type='submit'>Add Income</button>
+      </form>
+
+      {incomes.map(income => <IncomeCard {...income} />)}
+      
     </div>
   );
 }
