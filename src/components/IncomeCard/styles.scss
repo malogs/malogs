@@ -1,0 +1,135 @@
+
+.incomecard {
+  .date {
+    display: block;
+    font-size: 11px;
+    font-weight: 100;
+  }
+
+  .name {
+    text-transform: capitalize;
+    font-weight: bold;
+    margin-right: auto;
+  }
+
+  .value {
+    color: green;
+  }
+
+  &__summary {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-income{
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  }
+
+  &__actions-milestone,
+  &__actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__expenses {
+
+    &-header {
+      color: crimson;
+      font-size: 15px;
+    }
+
+    & > li {
+      border: 1px solid #ccc;
+      margin-top: 5px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #eee;
+    }
+
+    &-wrapper {
+      padding: 10px;
+      padding-top: 5px;
+    }
+
+    .value {
+      color: crimson;
+    }
+
+    &-milestones {
+      font-size: 14px;
+
+      &-header {
+        color: teal;
+      }
+
+      & > li::before {
+        content: ">";
+        position: absolute;
+        left: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+      }
+
+      &-wrapper {
+        padding-left: 20px;
+        padding-top: 10px;
+      }
+
+      .value {
+        color: teal;
+      }
+    }
+  }
+}
+
+form {
+  margin-top: 5px;
+}
+
+input {
+  padding: 5px 10px;
+  border: 1px solid;
+  outline: none;
+  margin-right: 6px;
+}
+
+select {
+  border: none;
+  background: none;
+  padding: 5px 10px;
+  border: 1px solid;
+}
+
+button {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 5px 10px;
+  border: 1px solid;
+
+  &.add:hover,
+  &.delete:hover,
+  &:hover {
+    background-color: #444;
+    color: #eee;
+  }
+  
+  &.delete:hover {background-color: crimson;}
+  
+  &.add:hover {background-color: teal;}
+}
+
+.set {
+  &-milestones {
+    color: orange;
+  }
+
+  &-expenses {
+    color: crimson;
+  }
+}
