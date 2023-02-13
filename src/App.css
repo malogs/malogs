@@ -6,11 +6,15 @@
 }
 
 body {
-  background-color: #ccc;
+  background-color: #eee;
 }
 
 .container {
   margin: 0 auto;
   width: 100%;
   max-width: 900px;
+}
+
+ul {
+  list-style: none;
 }
