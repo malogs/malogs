@@ -130,7 +130,11 @@ function App() {
     window.onbeforeunload = function () {
       if (dirty) return "Have you saved the changes?";
     }
-  }, [dirty, incomes])
+  }, [dirty, incomes]);
+
+  useEffect(function () {
+    retrieveData();
+  }, []);
   return (
     <div className="container">
       <div className="incomecard__summary">
