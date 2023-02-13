@@ -25,7 +25,7 @@ function Expense({name, value, milestones, deleteExpense, deleteMilestone, expId
       <div className="incomecard__summary">
         <div className='incomecard__summary-income'>
           <span className="name">{name}:</span>
-          <span className="value">{parseFloat(value).toLocaleString('en-US', {style: 'currency', currency})}</span>
+          <span className="value">{(parseFloat(value) + (showMilestones ? (-1 * milestones.map(m => m.value).reduce((a, b) => parseFloat(a) + parseFloat(b), 0)) : 0) ).toLocaleString('en-US', {style: 'currency', currency})}</span>
           {milestones.length > 0 && !showMilestones && 
             <span className='set-milestones'>
               ({
