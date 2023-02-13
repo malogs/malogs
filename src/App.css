@@ -5,14 +5,12 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-  background-color: #eee;
-}
-
 .container {
   margin: 0 auto;
-  width: 100%;
+  width: 90%;
   max-width: 900px;
+  background-color: #eee;
+  padding: 10px;
 }
 
 ul {
