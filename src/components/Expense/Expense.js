@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function Expense({name, value, milestones, deleteExpense, deleteMilestone, expId, incomId, addMilestone, currency="USD"}) {
+function Expense({name, value, milestones, deleteExpense, deleteMilestone, expId, incomId, addMilestone, currency="USD", isComplete, completeExpense}) {
   const [showMilestoneForm, setShowMilestoneForm] = useState(false);
   const [showMilestones, setShowMilestones] = useState(false);
   const [milestoneName, setMilestoneName] = useState("");
@@ -20,10 +20,19 @@ function Expense({name, value, milestones, deleteExpense, deleteMilestone, expId
       triggerMilestoneForm();
     } else alert('Please fill the milestone name and value!');
   }
+  
+  let isCompleted = isComplete;
+  const completionCondition = ((parseFloat(value) + (-1 * milestones.map(m => m.value).reduce((a, b) => parseFloat(a) + parseFloat(b), 0))) <= 0);
+
+  // if( completionCondition && !isComplete) {
+  //   isCompleted = true;
+  //   completeExpense(incomId, expId);
+  // }
 
   return (<>
+        <input type="checkbox" name="isComplete" value={isComplete} checked={isComplete} onChange={() => completeExpense(incomId, expId)} />
       <div className="incomecard__summary">
-        <div className='incomecard__summary-income'>
+        <div className={'incomecard__summary-income' + (isCompleted ? ' completed' : '')}>
           <span className="name">{name}:</span>
           <span className="value">{(parseFloat(value) + (showMilestones ? (-1 * milestones.map(m => m.value).reduce((a, b) => parseFloat(a) + parseFloat(b), 0)) : 0) ).toLocaleString('en-US', {style: 'currency', currency})}</span>
           {milestones.length > 0 && !showMilestones && 
@@ -37,7 +46,7 @@ function Expense({name, value, milestones, deleteExpense, deleteMilestone, expId
         </div>
         <div className="incomecard__actions-milestone">
           {milestones.length > 0 && <button onClick={() => setShowMilestones(prev => !prev)}>{showMilestones ? 'Hide' : 'Show'} Millestones</button>}
-          <button className='add' onClick={triggerMilestoneForm}>{showMilestoneForm ? 'Close ' : ''}Add Millestone</button>
+          {!isCompleted && !completionCondition && <button className='add' onClick={triggerMilestoneForm}>{showMilestoneForm ? 'Close ' : ''}Add Millestone</button>}
           {milestones.length < 1 && <button className='delete' onClick={() => deleteExpense(incomId, expId)}>Delete Expense</button>}
         </div>
       </div>

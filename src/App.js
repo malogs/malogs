@@ -9,6 +9,7 @@ function App() {
   const [incomeValue, setIncomeValue] = useState(0);
   const [incomeMonth, setIncomeMonth] = useState(null);
   const [dirty, setDirty] = useState(true);
+  const currency = 'USD';
 
   function addIncome(e) {
     e.preventDefault();
@@ -122,6 +123,29 @@ function App() {
     if (prevIncomes) setIncomes(JSON.parse(prevIncomes));
   }
 
+  function completeExpense(incomeId, expId) {
+    if (expId && incomeId) {
+      const sol = window.confirm('Are you sure you want to change expense completion?');
+      if (sol) setIncomes(prev => prev.map(incom => {
+        if (incom.id === incomeId) {
+          return {
+            ...incom,
+            expenses: incom.expenses.map(exp => {
+              if (exp.id === expId){
+                const outExp = {
+                  ...exp,
+                  isComplete: !exp.isComplete,
+                };
+                return outExp;
+              }
+              else return exp;
+            }),
+          };
+        } else return incom;
+      }));
+    }
+  }
+
   useEffect(() => {
     incomes.sort((a, b) => a.date > b.date);
   }, [incomes]);
@@ -130,13 +154,18 @@ function App() {
     window.onbeforeunload = function () {
       if (dirty) return "Have you saved the changes?";
     }
-  }, [dirty, incomes])
+  }, [dirty, incomes]);
+
+  useEffect(function () {
+    retrieveData();
+  }, []);
+
   return (
     <div className="container">
       <div className="incomecard__summary">
         <h1>Budgeting app</h1>
         <div>
-          <button className='add' onClick={retrieveData}>Sync</button>
+          {/* <button className='add' onClick={retrieveData}>Sync</button> */}
           <button style={{marginLeft: '6px'}} onClick={persistData}>Save</button>
         </div>
       </div>
@@ -147,8 +176,18 @@ function App() {
         <button type='submit'>Add Income</button>
       </form>
 
-      {incomes.map(income => <IncomeCard {...income} addMilestone={addMilestone} addExpense={addExpense} deleteOne={deleteOne} deleteExpense={deleteExpense} deleteMilestone={deleteMilestone} />)}
-      
+      <div className="incomecard__wrapper">
+        {incomes.map(income => <IncomeCard {...income} completeExpense={completeExpense} addMilestone={addMilestone} addExpense={addExpense} deleteOne={deleteOne} deleteExpense={deleteExpense} deleteMilestone={deleteMilestone} />)}
+      </div>
+
+      <div className="total-summary">
+        <ul>
+          <li><b>Total Income: </b><span className='value'>{incomes.map(inc => parseFloat(inc.value)).reduce((a, b) => a + b, 0).toLocaleString('en-US', {style: 'currency', currency})}</span></li>
+          <li><b>Total Income (Remaining): </b><span className='value'>{incomes.map(inc => parseFloat(inc.value) - parseFloat(inc.expenses.map(exp => parseFloat(exp.value)).reduce((a, b) => a + b, 0))).reduce((a, b) => a + b, 0).toLocaleString('en-US', {style: 'currency', currency})}</span></li>
+          <li><b>Total Expenses (Planned): </b><span className='value'></span></li>
+          <li><b>Total Expenses (Completed): </b><span className='value'></span></li>
+        </ul>
+      </div>
     </div>
   );
 }
