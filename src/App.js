@@ -5,6 +5,7 @@ import IncomeCard from './components/IncomeCard/IncomeCard';
 
 function App() {
   const [incomes, setIncomes] = useState([]); 
+  const [lastDate, setLastDate] = useState(dayjs(new Date()).format('DD MMMM YYYY'));
   const [incomeName, setIncomeName] = useState("");
   const [incomeValue, setIncomeValue] = useState(0);
   const [incomeMonth, setIncomeMonth] = useState(null);
@@ -46,7 +47,7 @@ function App() {
 
   function addMilestone(id, name, value, expId, incomeId) {
     setIncomes(prev => {
-      const milestone = { name, value, id, date: dayjs(new Date()).format('DD MMMM YYYY') };
+      const milestone = { name, value, id, date: dayjs(new Date()).format('YYYY-MM-DD') };
       return prev.map(incom => {
         if (incom.id === incomeId) return {
             ...incom,
@@ -148,6 +149,7 @@ function App() {
 
   useEffect(() => {
     incomes.sort((a, b) => a.date > b.date);
+    incomes && setLastDate(incomes[incomes.length - 1]?.date);
   }, [incomes]);
   
   useEffect(function () {
@@ -182,10 +184,10 @@ function App() {
 
       <div className="total-summary">
         <ul>
-          <li><b>Total Income: </b><span className='value'>{incomes.map(inc => parseFloat(inc.value)).reduce((a, b) => a + b, 0).toLocaleString('en-US', {style: 'currency', currency})}</span></li>
-          <li><b>Total Income (Remaining): </b><span className='value'>{incomes.map(inc => parseFloat(inc.value) - parseFloat(inc.expenses.map(exp => parseFloat(exp.value)).reduce((a, b) => a + b, 0))).reduce((a, b) => a + b, 0).toLocaleString('en-US', {style: 'currency', currency})}</span></li>
-          <li><b>Total Expenses (Planned): </b><span className='value'></span></li>
-          <li><b>Total Expenses (Completed): </b><span className='value'></span></li>
+          <li><b>Total Income: </b><span className='value' style={{color: 'green'}}>{incomes.map(inc => parseFloat(inc.value)).reduce((a, b) => a + b, 0).toLocaleString('en-US', {style: 'currency', currency})}</span></li>
+          <li><b>Total Expenses (Planned): </b><span className='value' style={{color: 'crimson'}}>{incomes.map(inc => parseFloat(inc.expenses.map(exp => parseFloat(exp.value)).reduce((a, b) => a + b, 0))).reduce((a, b) => a + b, 0).toLocaleString('en-US', {style: 'currency', currency})}</span></li>
+          <li><b>Total Income (Remaining until {dayjs(lastDate).format("MMMM YYYY")}): </b><span className='value' style={{color: 'green'}}>{incomes.map(inc => parseFloat(inc.value) - parseFloat(inc.expenses.map(exp => parseFloat(exp.value)).reduce((a, b) => a + b, 0))).reduce((a, b) => a + b, 0).toLocaleString('en-US', {style: 'currency', currency})}</span></li>
+          {/* <li><b>Total Expenses (Completed): </b><span className='value'></span></li> */}
         </ul>
       </div>
     </div>

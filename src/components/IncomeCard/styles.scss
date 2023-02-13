@@ -106,6 +106,7 @@
     height: 80vh;
     overflow-y: scroll;
     border-bottom: 1px solid;
+    padding-bottom: 10px;
   }
 }
 
@@ -155,4 +156,8 @@ button {
   &-expenses {
     color: crimson;
   }
+}
+
+.total-summary {
+  padding-top: 10px;
 }
