@@ -4,7 +4,7 @@ import Card from '../Card';
 import Expense from '../Expense/Expense';
 import './styles.scss';
 
-function IncomeCard({id, name, value, date, expenses, addExpense, deleteOne, deleteExpense, deleteMilestone, addMilestone}) {
+function IncomeCard({id, name, value, date, expenses, addExpense, deleteOne, deleteExpense, deleteMilestone, addMilestone, completeExpense}) {
   const [showExpenseForm, setShowExpenseForm] = useState(false);
   const [showExpenses, setShowExpenses] = useState(false);
   const [expenseName, setExpenseName] = useState("");
@@ -63,7 +63,7 @@ function IncomeCard({id, name, value, date, expenses, addExpense, deleteOne, del
         <div className={showExpenses && "incomecard__expenses-wrapper"}>
           {expenses.length && showExpenses ? <h3 className='incomecard__expenses-header'>Expenses</h3> : ""}
           <ul className='incomecard__expenses'>
-            {showExpenses && expenses.map(exp => <li><Expense currency={currency} {...exp} addMilestone={addMilestone} incomId={id} expId={exp.id} deleteExpense={deleteExpense} deleteMilestone={deleteMilestone} /></li>)}
+            {showExpenses && expenses.map(exp => <li><Expense currency={currency} {...exp} completeExpense={completeExpense} addMilestone={addMilestone} incomId={id} expId={exp.id} deleteExpense={deleteExpense} deleteMilestone={deleteMilestone} /></li>)}
           </ul>
         </div>
       </Card>
