@@ -16,3 +16,16 @@
 ul {
   list-style: none;
 }
+
+/* Mobile breakpoint */
+/* @media (max-width: 480px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  ul {
+    flex: 1 0 auto;
+    height: 100px;
+    margin: 2px;
+  }
+} */

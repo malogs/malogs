@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import './App.css';
 import IncomeCard from './components/IncomeCard/IncomeCard';
+import Expense from './components/Expense/Expense';
 
 function App() {
   const [incomes, setIncomes] = useState([]); 
@@ -175,7 +176,7 @@ function App() {
         <input type="text" placeholder='Income Name' value={incomeName} onChange={(e) => setIncomeName(e.target.value)} />
         <input type="text" placeholder='Income Amount' value={incomeValue} onChange={(e) => setIncomeValue(e.target.value.trim())} />
         <input type="date" placeholder='Income Month' value={incomeMonth} onChange={(e) => setIncomeMonth(e.target.value)} />
-        <button type='submit'>Add Income</button>
+        <button type='submit'>Add expense</button>
       </form>
 
       <div className="incomecard__wrapper">
