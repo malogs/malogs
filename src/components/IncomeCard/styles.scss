@@ -101,7 +101,7 @@
   }
 
   &__wrapper {
-    height: 80vh;
+    height: 65vh;
     overflow-y: scroll;
     border-bottom: 1px solid;
     padding-bottom: 10px;
@@ -109,7 +109,8 @@
 }
 
 form {
-  margin-top: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 input {
@@ -194,5 +195,10 @@ button {
   }
   h1 {
     padding: 10px;
+  }
+  .incomecard {
+    &__wrapper {
+      height: 60vh;
+    }
   }
 }
