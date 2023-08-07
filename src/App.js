@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import "./App.css";
 import IncomeCard from "./components/IncomeCard/IncomeCard";
-import Expense from "./components/Expense/Expense";
 
 function App() {
   const [incomes, setIncomes] = useState([]);
