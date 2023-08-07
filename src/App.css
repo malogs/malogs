@@ -41,3 +41,26 @@ ul {
     margin: 2px;
   }
 } */
+.login-container {
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 70px;
+}
+
+.login-container .btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  font-size: 80px;
+}
+
+.login-container .btn-container button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  padding: 10px 30px;
+}
